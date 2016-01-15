@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	".." // koala
+	"github.com/haochi/koala"
 )
 
 func main() {
