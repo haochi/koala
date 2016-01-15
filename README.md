@@ -19,3 +19,7 @@ app.Get("/~{id}", func (writer http.ResponseWriter, request *http.Request) {
 
 app.ListenAndServe(":8080")
 ```
+
+## documentation
+
+[it is on godoc.org](https://godoc.org/github.com/haochi/koala)
