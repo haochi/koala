@@ -1,4 +1,4 @@
-# koala
+# koala [![Build Status](https://travis-ci.org/haochi/koala.svg?branch=master)](https://travis-ci.org/haochi/koala)
 
 lightweight multiplexer for Go
 
