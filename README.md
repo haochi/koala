@@ -8,7 +8,7 @@ lightweight multiplexer for Go
 $ go get "github.com/haochi/koala"
 ```
 
-```golang
+```go
 import "github.com/haochi/koala"
 
 app := koala.New()
