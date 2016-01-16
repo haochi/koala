@@ -8,12 +8,14 @@ import (
 var locker = sync.RWMutex{}
 var vars = make(map[*http.Request]map[string]string)
 
-func GetPathParam(request *http.Request, key string) string {
-	pathVars := GetPathParams(request)
+// Get the resolved route parameter with the given key
+func Param(request *http.Request, key string) string {
+	pathVars := Params(request)
 	return pathVars[key]
 }
 
-func GetPathParams(request *http.Request) map[string]string {
+// Get all the resolved route parameters
+func Params(request *http.Request) map[string]string {
 	locker.RLock()
 	params := vars[request]
 	locker.RUnlock()

@@ -7,10 +7,8 @@ import (
 	"regexp"
 )
 
-const nonClosingCurlyBracketRegExp = `[^\}]+`
-
-var pathToRegExpReplacer = `(?P<%s>[^/]+)`
-var paramRegExp = regexp.MustCompile(fmt.Sprintf(`\{(%s)\}`, nonClosingCurlyBracketRegExp))
+var pathToRegExpReplacer = `(?P<%s>.+)`
+var paramRegExp = regexp.MustCompile(fmt.Sprintf(`\{(%s)\}`, `[^\}]+`))
 
 type Route struct {
 	path       string

@@ -12,10 +12,10 @@ func main() {
 
 	app.ServeStaticFiles("/static", "/tmp")
 	app.Get("/~{id}", func (writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "user %s reporting for duty!", koala.GetPathParam(request, "id"))
+		fmt.Fprintf(writer, "user %s reporting for duty!", koala.Param(request, "id"))
 	})
 	app.Get("/~{id}/hello", func (writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "hello %s!", koala.GetPathParam(request, "id"))
+		go fmt.Fprintf(writer, "hello %s!", koala.Param(request, "id"))
 	})
 
 	app2.Get("/", func (writer http.ResponseWriter, request *http.Request) {

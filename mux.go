@@ -13,13 +13,6 @@ type Mux struct {
 
 const slash = "/"
 
-// Create a new mux
-func New() *Mux {
-	mux := &Mux{}
-	mux.ServeMux = http.NewServeMux()
-	return mux
-}
-
 // Add a new route
 func (mux *Mux) AddRoute(method string, path string, handler http.HandlerFunc) *Mux {
 	route := NewRoute(method, path, handler)

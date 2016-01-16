@@ -1,14 +1,3 @@
-# koala [![Build Status](https://travis-ci.org/haochi/koala.svg?branch=master)](https://travis-ci.org/haochi/koala)
-
-lightweight multiplexer for Go
-
-## install
-
-```bash
-$ go get "github.com/haochi/koala"
-```
-
-```go
 package main
 
 import (
@@ -30,9 +19,3 @@ func main() {
 
 	app.ListenAndServe(":8080")
 }
-
-```
-
-## documentation
-
-[it is on godoc.org](https://godoc.org/github.com/haochi/koala)

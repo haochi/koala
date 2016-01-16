@@ -13,13 +13,13 @@ func TestSetRequestVars(t *testing.T) {
 		params[key] = val
 		setRequestVars(r, params)
 
-		if len(GetPathParams(r)) != 1 || GetPathParam(r, key) != val {
+		if len(Params(r)) != 1 || Param(r, key) != val {
 			t.Error()
 		}
 
 		deleteRequestVars(r)
 
-		if len(GetPathParams(r)) != 0 {
+		if len(Params(r)) != 0 {
 			t.Error()
 		}
 	}))
