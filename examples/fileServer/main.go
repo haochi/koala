@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/haochi/koala"
 	"net/http"
-	"fmt"
 )
 
 func main() {
