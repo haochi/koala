@@ -7,7 +7,7 @@ import (
 	"regexp"
 )
 
-var pathToRegExpReplacer = `(?P<%s>.+)`
+var pathToRegExpReplacer = `(?P<%s>.*)`
 var paramRegExp = regexp.MustCompile(fmt.Sprintf(`\{(%s)\}`, `[^\}]+`))
 
 type Route struct {
@@ -15,20 +15,21 @@ type Route struct {
 	pathRegExp *regexp.Regexp
 	pathLength int
 	method     string
-	handler    http.HandlerFunc
+	handler    http.Handler
 }
 
-func NewRoute(method string, path string, handler http.HandlerFunc) *Route {
+func NewRoute(method string, path string, handler http.Handler) *Route {
 	route := &Route{path: path, method: method, handler: handler}
 	initRoutePathRegExp(route)
 	route.pathLength = len(path)
 	return route
 }
 
-func (route *Route) resolve(path string, method string) (resolved bool, params map[string]string) {
+func (route *Route) resolve(path string, method string) (resolved bool, staticPath bool, params map[string]string) {
 	if route.method == method {
 		if route.path == path {
 			resolved = true
+			staticPath = true
 		} else if route.pathRegExp != nil {
 			resolved, params = resolvePathParams(path, route.pathRegExp)
 		}

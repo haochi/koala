@@ -51,6 +51,6 @@ func TestRouteOrder(t *testing.T) {
 	}
 }
 
-func simpleHandler(w http.ResponseWriter, r *http.Request) {
+var simpleHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-}
+})
