@@ -17,5 +17,5 @@ func main() {
 		fmt.Fprintf(w, "user %s reporting for duty!", koala.Param(r, "id"))
 	})
 
-	app.ListenAndServe(":8080")
+	panic(http.ListenAndServe(":8080", app))
 }

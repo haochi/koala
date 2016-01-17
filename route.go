@@ -13,6 +13,7 @@ var paramRegExp = regexp.MustCompile(fmt.Sprintf(`\{(%s)\}`, `[^\}]+`))
 type Route struct {
 	path       string
 	pathRegExp *regexp.Regexp
+	pathLength int
 	method     string
 	handler    http.HandlerFunc
 }
@@ -20,6 +21,7 @@ type Route struct {
 func NewRoute(method string, path string, handler http.HandlerFunc) *Route {
 	route := &Route{path: path, method: method, handler: handler}
 	initRoutePathRegExp(route)
+	route.pathLength = len(path)
 	return route
 }
 

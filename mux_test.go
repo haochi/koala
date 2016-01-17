@@ -10,10 +10,6 @@ func TestCreateNewApp(t *testing.T) {
 	if len(mux.Routes) != 0 {
 		t.Error()
 	}
-
-	if mux.ServeMux == nil {
-		t.Error()
-	}
 }
 
 func TestAddRoute(t *testing.T) {
@@ -42,9 +38,17 @@ func TestHTTPVerbs(t *testing.T) {
 	}
 }
 
-func TestServeStaticFiles(t *testing.T) {
+func TestRouteOrder(t *testing.T) {
 	mux := New()
-	mux.ServeStaticFiles("/", "")
+
+	mux.Get("/{id}", simpleHandler)
+	mux.Get("/{id}/hello", simpleHandler)
+
+	_, params := mux.getHandlerAndParamsForRequest("GET", "/haochi/hello")
+
+	if params["id"] != "haochi" {
+		t.Error(params["id"])
+	}
 }
 
 func simpleHandler(w http.ResponseWriter, r *http.Request) {
