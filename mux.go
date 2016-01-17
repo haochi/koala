@@ -4,17 +4,25 @@ import (
 	"net/http"
 )
 
+const slash = "/"
+
 type Mux struct {
-	Routes          []*Route
+	routeMap        map[string][]*Route
 	NotFoundHandler http.Handler
 }
 
-const slash = "/"
+// Create a new mux
+func New() *Mux {
+	mux := &Mux{}
+	mux.routeMap = make(map[string][]*Route)
+	mux.NotFoundHandler = http.NotFoundHandler()
+	return mux
+}
 
 // Add a new route
 func (mux *Mux) AddRoute(method string, path string, handler http.HandlerFunc) *Mux {
 	route := NewRoute(method, path, handler)
-	mux.Routes = append(mux.Routes, route)
+	mux.routeMap[method] = append(mux.routeMap[method], route)
 	return mux
 }
 
@@ -40,18 +48,18 @@ func (mux *Mux) Delete(path string, handler http.HandlerFunc) *Mux {
 
 // Serve HTTP
 func (mux *Mux) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
-	handlerFunc, params := mux.getHandlerAndParamsForRequest(request.Method, request.URL.Path)
+	handlerFunc, params := getHandlerAndParamsForRequest(mux, request.Method, request.URL.Path)
 	setRequestVars(request, params)
 	handlerFunc(writer, request)
 	go deleteRequestVars(request)
 }
 
-func (mux *Mux) getHandlerAndParamsForRequest(method, path string) (http.HandlerFunc, map[string]string) {
+func getHandlerAndParamsForRequest(mux *Mux, method string, path string) (http.HandlerFunc, map[string]string) {
 	var resolvedHandler = mux.NotFoundHandler.ServeHTTP
 	var resolvedParams map[string]string = nil
 	var pathLength = -1
 
-	for _, route := range mux.Routes {
+	for _, route := range mux.routeMap[method] {
 		resolved, params := route.resolve(path, method)
 
 		if resolved && route.pathLength > pathLength {
